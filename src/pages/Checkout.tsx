@@ -60,7 +60,7 @@ const Checkout = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setTimeout(() => toast.info("Redirecionando para o pagamento seguro..."), 0);
+    toast.info("Processando sua inscrição...");
 
     try {
       // 1. Salva no Supabase (Status Pendente)
@@ -70,19 +70,26 @@ const Checkout = () => {
         phone: values.phone.replace(/\D/g, ''),
       });
 
-      // 2. Monta a URL do Checkout Guru com Pre-fill
-      const baseUrl = import.meta.env.VITE_GURU_CHECKOUT_URL;
-      const params = new URLSearchParams({
-        name: values.name,
-        email: values.email,
-        phone_number: values.phone.replace(/\D/g, ''),
-        phone: values.phone.replace(/\D/g, '')
-      });
+      // 2. Dispara o E-mail de Teste via nossa API interna
+      // Nota: Em ambiente local (Vite), isso pode falhar se não estiver usando o Vercel Dev,
+      // mas deixamos pronto para o teste do Resend conforme solicitado.
+      try {
+        await fetch('/api/send-welcome-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: values.email,
+            name: values.name
+          }),
+        });
+      } catch (emailError) {
+        console.warn('Aviso: Não foi possível disparar o e-mail localmente (esperado fora da Vercel).', emailError);
+      }
 
-      // 3. Redireciona
-      // setTimeout(() => {
-      window.location.href = `${baseUrl}?${params.toString()}`;
-      // }, 1000);
+      // 3. Vai direto para a tela de agradecimento (Pula o Guru)
+      navigate('/obrigado');
 
     } catch (error) {
       console.error('Erro ao salvar no Supabase:', error);
@@ -90,27 +97,14 @@ const Checkout = () => {
 
       let friendlyMessage = "Ocorreu um erro ao processar sua inscrição.";
       if (errorMessage.includes("unique_profile_email")) {
-        // Se já existe, ainda assim mandamos pro checkout (recuperação de venda), 
-        // mas idealmente avisaríamos "E-mail já cadastrado".
-        // Para simplificar a conversão, vamos redirecionar igual, pois o Guru trata duplicidade ou o webhook atualiza.
-        // Mas para evitar erro de fluxo, vamos só redirecionar.
-
-        const baseUrl = import.meta.env.VITE_GURU_CHECKOUT_URL;
-        const params = new URLSearchParams({
-          name: values.name,
-          email: values.email,
-          phone: values.phone.replace(/\D/g, '')
-        });
-        window.location.href = `${baseUrl}?${params.toString()}`;
+        // Se já existe, por enquanto vamos apenas levar para a página de obrigado no teste
+        navigate('/obrigado');
         return;
       }
 
-      setTimeout(() => {
-        toast.error(friendlyMessage);
-      }, 0);
+      toast.error(friendlyMessage);
       setIsLoading(false);
     }
-    // Não setamos isLoading(false) no sucesso porque a página vai recarregar/mudar
   }
 
   return (
