@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* KarCash Design System - Bold, Aggressive, Conversion-Focused */
+
+
+@layer base {
+  :root {
+    /* Core Brand Colors - KarCash Visual Identity */
+    --background: 176 80% 9%;
+    /* --background: 105 83% 5.5%; */
+    /* Quase preto para o fundo */
+    --foreground: 0 0% 98%;
+    /* Branco para textos */
+
+    --card: 0 0% 5%;
+    /* Cinza escuro para cards */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Verde Limão - Cor Primária */
+    /* --primary: 105 100% 50%; */
+    --primary: 71 100% 62%;
+    /* #7CFC00 - Verde Limão Brilhante */
+    --primary-foreground: 0 0% 5%;
+    /* Preto para texto em botões primários */
+
+    /* Azul Petróleo / Verde Escuro - Cor Secundária/Destaque */
+    --secondary: 175 50% 30%;
+    /* #26736A */
+    --secondary-foreground: 0 0% 98%;
+
+    /* Cores de UI */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 105 100% 50%;
+    /* Verde Limão como cor de destaque */
+    --accent-foreground: 0 0% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 105 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* button CTA */
+    --btn-secondary-cta: #FF5E00;
+    /* Laranja Vibrante */
+
+    /* Gradients */
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 8%) 0%, hsl(0 0% 3%) 100%);
+    --gradient-cta-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(105 100% 40%) 100%);
+
+    /* Shadows */
+
+    --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.6);
+    --shadow-elevated: 0 20px 40px -15px hsl(0 0% 0% / 0.5);
+
+    /* Typography */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+
+  /* CTA Buttons */
+  .btn-primary-cta {
+    @apply relative overflow-hidden px-8 py-4 text-lg font-bold uppercase tracking-wide rounded-xl transition-all duration-300;
+    background: var(--btn-secondary-cta);
+    color: hsl(var(--foreground));
+    animation: pulseGlow 2.5s infinite;
+  }
+
+  .btn-primary-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    animation-play-state: paused;
+    box-shadow: 0 0 35px 2px rgba(255, 94, 0, 0.6);
+  }
+
+  .btn-secondary-cta {
+    @apply px-8 py-4 text-lg font-bold uppercase tracking-wide rounded-xl transition-all duration-300;
+    background-color: var(--btn-secondary-cta);
+    color: hsl(var(--foreground));
+  }
+
+  .btn-secondary-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.15);
+    box-shadow: 0 0 40px var(--btn-secondary-cta);
+  }
+
+  /* Cards */
+  .card-elevated {
+    @apply rounded-2xl border border-border p-6;
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-car {
+    @apply rounded-2xl border border-border overflow-hidden transition-all duration-300;
+    background: var(--gradient-card);
+  }
+
+  .card-car:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-elevated);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  /* Phone mockup */
+  .phone-mockup {
+    @apply relative rounded-[2.5rem] border-4 border-border/50 overflow-hidden;
+    background: hsl(var(--card));
+    box-shadow: var(--shadow-elevated), inset 0 0 0 2px hsl(var(--border) / 0.3);
+  }
+
+  /* Floating animation */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Pulse glow animation */
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px -5px rgba(255, 94, 0, 0.4);
+    }
+
+    50% {
+      box-shadow: 0 0 30px 0px rgba(255, 94, 0, 0.7);
+    }
+  }
+
+  /* Counter animation helper */
+  .counter-value {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Section styling */
+  .section-dark,
+  .section-navy {
+    background: hsl(var(--secondary) / 0.3);
+    /* Usa a cor secundária com transparência para um fundo sutil */
+  }
+
+  /* Strikethrough price */
+  .price-old {
+    @apply text-muted-foreground line-through text-lg;
+  }
+
+  .price-new {
+    @apply text-3xl font-bold;
+    color: hsl(var(--primary));
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .profit-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-bold;
+    background: hsl(var(--primary) / 0.15);
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary) / 0.3);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+}
