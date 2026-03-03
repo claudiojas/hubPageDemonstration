@@ -3,10 +3,10 @@ import { Shield, Lock, Check } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import InputMask from "react-input-mask";
+// import InputMask from "react-input-mask"; // Removido para evitar avisos de findDOMNode
 // import { supabase } from "@/lib/supabaseClient"; // Removido: agora usamos o repository
 import subscriptionRepository from "@/repositories/subscriptionRepository"; // Importa o repository
-import { Toaster, toast } from 'sonner'; // Importa o sistema de toasts
+import { toast } from 'sonner'; // Importa o sistema de toasts
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import api from "@/services/api"; // Importa o serviço de API
@@ -46,6 +46,17 @@ const Checkout = () => {
 
   const { isValid } = form.formState;
   const navigate = useNavigate(); // Inicializa useNavigate
+
+  const formatPhone = (value: string) => {
+    if (!value) return value;
+    const phoneNumber = value.replace(/[^\d]/g, '');
+    const phoneNumberLength = phoneNumber.length;
+    if (phoneNumberLength < 3) return phoneNumber;
+    if (phoneNumberLength < 7) {
+      return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2)}`;
+    }
+    return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`;
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -104,7 +115,6 @@ const Checkout = () => {
 
   return (
     <>
-      <Toaster richColors position="top-center" />
       <div className="min-h-screen bg-background flex flex-col">
         {/* Header */}
         <header className="bg-card border-b border-border py-4">
@@ -214,21 +224,17 @@ const Checkout = () => {
                         <FormItem>
                           <FormLabel className="text-foreground mb-2 block">WhatsApp (com DDD)</FormLabel>
                           <FormControl>
-                            <InputMask
-                              mask="(99) 99999-9999"
-                              value={field.value}
-                              onChange={field.onChange}
+                            <Input
+                              {...field}
+                              type="tel"
+                              placeholder="(00) 00000-0000"
+                              onChange={(e) => {
+                                const formatted = formatPhone(e.target.value);
+                                field.onChange(formatted);
+                              }}
+                              className="bg-input border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                               disabled={isLoading}
-                            >
-                              {(inputProps: any) => (
-                                <Input
-                                  {...inputProps}
-                                  type="tel"
-                                  placeholder="(00) 00000-0000"
-                                  className="bg-input border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                                />
-                              )}
-                            </InputMask>
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

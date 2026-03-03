@@ -80,30 +80,38 @@ export default async function handler(
         await resend.emails.send({
             from: 'KarCash <onboarding@resend.dev>',
             to: [email],
-            subject: 'Pagamento Aprovado! Bem-vindo à Família KarCash 🚀',
+            subject: 'Confirmação de Sistema - KarCash Vendas 🚀',
             html: `
-                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
-                    <div style="text-align: center; margin-bottom: 30px;">
-                        <h1 style="color: #00ff00;">Pagamento Confirmado! ✅</h1>
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; background-color: #ffffff;">
+                    <!-- Header with Logo/Bar -->
+                    <div style="background-color: #000000; padding: 20px; text-align: center; border-bottom: 4px solid #00ff00;">
+                        <img src="https://karcash-vip-lp.vercel.app/logo_karcash.webp" alt="KarCash" style="max-width: 180px; height: auto;" />
                     </div>
                     
-                    <p>Olá, <strong>${name}</strong>!</p>
-                    
-                    <p>Sua assinatura foi ativada com sucesso. Agora você tem acesso oficial aos "Lotes Invisíveis" do mercado automotivo.</p>
-                    
-                    <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: center;">
-                        <p style="margin-bottom: 15px; font-weight: bold;">Clique abaixo para entrar no Grupo VIP Exclusivo:</p>
-                        <a href="${whatsappLink}" style="background-color: #00fa9a; color: #000; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; display: inline-block;">
-                            ENTRAR NO GRUPO VIP AGORA 📲
-                        </a>
-                        <p style="font-size: 12px; margin-top: 10px; color: #666;">(Atenção: Não compartilhe este link. O acesso é monitorado.)</p>
+                    <div style="padding: 40px 30px; line-height: 1.6; color: #333333;">
+                        <h2 style="color: #000000; margin-top: 0;">Olá, aqui é a equipe KarCash Vendas.</h2>
+                        
+                        <div style="background-color: #f9f9f9; border-left: 4px solid #00ff00; padding: 15px; margin: 25px 0;">
+                            <p style="margin: 0; font-weight: 500;">Este é um e-mail de teste. Sistema de feedback funcionando corretamente.</p>
+                        </div>
+                        
+                        <p>Agradecemos a sua compra!</p>
+                        
+                        <div style="text-align: center; margin: 30px 0;">
+                            <a href="https://chat.whatsapp.com/GURU_VIP_GROUP" style="background-color: #00ff00; color: #000000; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; display: inline-block;">
+                                ACESSAR GRUPO VIP AGORA 📲
+                            </a>
+                        </div>
+                        
+                        <p style="margin-top: 30px;">
+                            Atenciosamente,<br/>
+                            <strong>Equipe KarCash Vendas</strong>
+                        </p>
                     </div>
-
-                    <p>Se tiver qualquer dúvida, responda este e-mail.</p>
                     
-                    <br/>
-                    <p>Bons negócios,</p>
-                    <p><strong>Claudio & Equipe KarCash</strong></p>
+                    <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666666;">
+                         © ${new Date().getFullYear()} KarCash - Todos os direitos reservados.
+                    </div>
                 </div>
             `,
         });

@@ -24,20 +24,36 @@ export default async function handler(
 
         // Envio do e-mail
         const data = await resend.emails.send({
-            from: 'KarCash <onboarding@resend.dev>', // Usando domínio de teste do Resend inicialmente, ou domínio configurado
+            from: 'KarCash <onboarding@resend.dev>',
             to: [email],
-            subject: 'Bem-vindo ao Grupo VIP KarCash! 🚗💰',
+            subject: 'Teste de Sistema - KarCash Vendas 🚗',
             html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1>Olá, ${name}!</h1>
-          <p>Sua inscrição na lista de espera VIP do KarCash foi confirmada com sucesso.</p>
-          <p>Estamos preparando ofertas exclusivas com margens de 20% a 50% abaixo da FIPE.</p>
-          <p>Fique atento ao seu e-mail, em breve entraremos em contato com as próximas etapas e acesso ao grupo.</p>
-          <br/>
-          <p>Atenciosamente,</p>
-          <p><strong>Equipe KarCash</strong></p>
-        </div>
-      `,
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; background-color: #ffffff;">
+                    <!-- Header with Logo/Bar -->
+                    <div style="background-color: #000000; padding: 20px; text-align: center; border-bottom: 4px solid #00ff00;">
+                        <img src="https://karcash-vip-lp.vercel.app/logo_karcash.webp" alt="KarCash" style="max-width: 180px; height: auto;" />
+                    </div>
+                    
+                    <div style="padding: 40px 30px; line-height: 1.6; color: #333333;">
+                        <h2 style="color: #000000; margin-top: 0;">Olá, aqui é a equipe KarCash Vendas.</h2>
+                        
+                        <div style="background-color: #f9f9f9; border-left: 4px solid #00ff00; padding: 15px; margin: 25px 0;">
+                            <p style="margin: 0; font-weight: 500;">Este é um e-mail de teste. Sistema de feedback funcionando corretamente.</p>
+                        </div>
+                        
+                        <p>Agradecemos a sua compra!</p>
+                        
+                        <p style="margin-top: 30px;">
+                            Atenciosamente,<br/>
+                            <strong>Equipe KarCash Vendas</strong>
+                        </p>
+                    </div>
+                    
+                    <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #666666;">
+                        © ${new Date().getFullYear()} KarCash - Todos os direitos reservados.
+                    </div>
+                </div>
+            `,
         });
 
         return response.status(200).json({ success: true, data });
